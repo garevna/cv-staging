@@ -13,14 +13,15 @@ onMounted(() => {})
 const rouletteSize = ref(360)
 const offset = ref('180px')
 
-// const rouletteSize = computed(() => {
-//   return Math.floor(win.width / 2)
-// })
+console.log(import.meta)
 
-// const offset = computed(() => {
-//   console.log(rouletteSize.value)
-//   return `${rouletteSize.value - 30}px`
-// })
+const image = `url(${import.meta.env.BASE_URL}images/roulette.svg)`
+const center = `url(${import.meta.env.BASE_URL}images/JS.gif)`
+
+const rouletteImage = ref(image)
+const centerImage = ref(center)
+
+console.log(rouletteImage)
 
 const rouletteWeelAngle = ref('0deg')
 
@@ -38,10 +39,10 @@ const props = defineProps({
 const state = reactive<{ angles: number[] }>({
   angles: [],
 })
-// const angles = reactive([])
+console.log(import.meta.env.BASE_URL)
 
 function showDescription(item: RouletteItem) {
-  console.log(item)
+  // console.log(item)
 }
 
 function rotateWeel(event: Event): void {
@@ -61,8 +62,6 @@ onMounted(() => {
       state.angles.push(index * 30)
     })
 })
-
-/* :style="{ transform: `rotate(${30 * index}deg)`, backgroundImage: `url(${item.src})` }" */
 </script>
 
 <template>
@@ -108,6 +107,7 @@ main {
   border: solid 64px transparent;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   transition: all 0.5s;
+  cursor: pointer;
 }
 
 .roulette-wheel::before {
@@ -118,13 +118,14 @@ main {
   width: 100%;
   height: 100%;
   border: solid 10px transparent;
-  background-image: url('src/assets/roulette.svg');
-  background-size: cover;
+  background-image: v-bind(centerImage), v-bind(rouletteImage);
+  background-size: 80px, cover;
   background-position: center;
   background-repeat: no-repeat;
   transform: rotate(v-bind(rouletteWeelAngle));
   z-index: -1;
   transition: all 0.5s;
+  cursor: pointer;
 }
 .roulette-item {
   position: absolute;
